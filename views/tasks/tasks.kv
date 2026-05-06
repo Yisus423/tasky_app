@@ -1,0 +1,52 @@
+<TasksScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp'
+        spacing: '15dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            
+            Button:
+                text: "< Volver"
+                size_hint_x: None
+                width: '80dp'
+                background_color: 0.5, 0.5, 0.5, 1
+                on_press:
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'menu'
+                    
+            Label:
+                text: "Gestor de Tareas MVP"
+                font_size: '24sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+
+        # Contenedor de la lista con Scroll
+        ScrollView:
+            BoxLayout:
+                id: tasks_container
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: '5dp'
+
+        # Área para añadir nuevas tareas
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '10dp'
+            
+            TextInput:
+                id: new_task_input
+                hint_text: 'Escribe una nueva tarea...'
+                multiline: False
+                
+            Button:
+                text: "Añadir"
+                size_hint_x: None
+                width: '100dp'
+                background_color: 0.2, 0.6, 1, 1
+                on_press: root.add_task_from_ui()
