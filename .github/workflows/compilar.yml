@@ -30,6 +30,11 @@ jobs:
       - name: Configurar SDK de Android
         uses: android-actions/setup-android@v3
 
+      - name: Instalar build-tools de Android
+        run: |
+          yes | sdkmanager "build-tools;33.0.0" "platform-tools"
+        export PATH=$PATH:$ANDROID_HOME/build-tools/33.0.0:$ANDROID_HOME/platform-tools
+
       # Instala las dependencias del sistema que Buildozer necesita en Ubuntu
       - name: Instalar dependencias de Ubuntu
         run: |
@@ -51,7 +56,10 @@ jobs:
           pip install --user buildozer cython sh
 
       # Ejecuta la compilación de forma nativa en la máquina virtual
+      # Compilar pasando las variables de entorno del SDK que configuró la acción anterior
       - name: Compilar con Buildozer
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
         run: |
           buildozer android debug
 
