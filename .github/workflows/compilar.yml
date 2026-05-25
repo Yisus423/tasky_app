@@ -1,0 +1,28 @@
+name: Compilar APK de Kivy
+
+on:
+  # Permite activar la compilación manualmente desde la pestaña "Actions" de GitHub
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Copia el código del repositorio a la máquina virtual de GitHub
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      # 2. Usa un contenedor Docker con Buildozer ya configurado para compilar
+      - name: Compilar con Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          workdir: .
+          buildozer_version: stable
+
+      # 3. Guarda el archivo .apk resultante para que los demás lo descarguen
+      - name: Subir APK terminada
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacion-android
+          path: bin/*.apk
