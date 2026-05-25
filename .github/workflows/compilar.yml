@@ -26,6 +26,10 @@ jobs:
         with:
           python-version: '3.11'
 
+      # Configura el SDK de Android completo con licencias aceptadas
+      - name: Configurar SDK de Android
+        uses: android-actions/setup-android@v3
+
       # Instala las dependencias del sistema que Buildozer necesita en Ubuntu
       - name: Instalar dependencias de Ubuntu
         run: |
